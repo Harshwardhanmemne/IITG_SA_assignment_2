@@ -1,36 +1,58 @@
-# NDVI-based Land Cover Classification 
+# 🌿 NDVI-based Land Cover Classification
 
-A machine learning solution for classifying land cover types using satellite NDVI time-series data, developed for the Summer Analytics 2025 hackathon hosted by Consulting & Analytics Club and GeeksforGeeks.
+A robust machine learning pipeline for classifying land cover types using noisy NDVI time-series data from satellites. Developed as part of the **Summer Analytics 2025** Hackathon organized by the Consulting & Analytics Club and GeeksforGeeks.
 
-## Problem Overview
+## 🛰️ Problem Statement
 
-This project tackles the challenge of identifying different land cover types (Water, Impervious, Farm, Forest, Grass, Orchard) from noisy satellite imagery data. The main hurdle? Real-world NDVI (Normalized Difference Vegetation Index) data is messy - cloudy skies block satellite views, and crowdsourced labels aren't always perfect.
+The task is to classify each location into one of six land cover types:
 
-## My Approach
+- Water
+- Impervious
+- Farm
+- Forest
+- Grass
+- Orchard
 
-I built a robust preprocessing pipeline that handles the data's inherent messiness:
+The input is a time-series of **27 NDVI readings per location**, but the data is noisy and contains missing values due to cloud cover and other real-world factors.
 
-- **Temporal Feature Engineering**: Created meaningful features from 27 NDVI time points, including differences between consecutive measurements and statistical summaries
-- **Smart Imputation**: Used IterativeImputer to fill missing values caused by cloud cover
-- **Dimensionality Reduction**: Applied PCA to retain 95% of variance while reducing noise
-- **Balanced Classification**: Implemented Logistic Regression with class balancing to handle uneven data distribution
+## 🧠 Approach
 
-## Key Results
+The notebook includes a full pipeline with preprocessing, feature engineering, dimensionality reduction, and classification:
 
-The model achieved **72% accuracy** on the test set, with particularly strong performance on forest classification (97% precision, 83% F1-score). The approach successfully handled the noisy training data while maintaining good generalization.
+### ✅ Preprocessing & Feature Engineering
+- **Temporal Features**: Computed rolling stats, deltas, and summaries across time points.
+- **Missing Value Imputation**: Used `IterativeImputer` to fill gaps in the NDVI series.
+- **Feature Scaling**: Standardized the data using `StandardScaler`.
 
-## Tech Stack
+### 📉 Dimensionality Reduction
+- Applied **PCA** to reduce dimensionality while retaining 95% of the variance.
+  
+### ⚖️ Model Training
+- Used **Logistic Regression** with class balancing (`class_weight='balanced'`) to address label imbalance.
+- Evaluation using classification metrics such as **accuracy**, **precision**, **recall**, and **F1-score**.
 
-- **Python**: Core language
-- **scikit-learn**: Machine learning pipeline
-- **pandas & numpy**: Data manipulation
-- **Logistic Regression**: Classification model (as per hackathon requirements)
+## 📊 Results
 
-## Files
+- **Overall Accuracy**: 72%
+- **Forest Class Performance**:
+  - Precision: 97%
+  - F1-Score: 83%
 
-- `IITG_SA_assignment_2.ipynb`: Complete solution with preprocessing, training, and prediction pipeline
-- `submission5.csv`: Final predictions for the test dataset
+These results reflect strong generalization in the face of noisy, real-world data.
 
----
+## 🛠️ Tech Stack
 
-*Participated in Summer Analytics 2025 Hackathon - A great learning experience in handling real-world noisy satellite data!*
+| Tool/Library     | Purpose                             |
+|------------------|-------------------------------------|
+| Python           | Core programming language           |
+| scikit-learn     | ML pipeline, imputation, PCA, model |
+| pandas & numpy   | Data wrangling and transformation   |
+| matplotlib & seaborn | Visualizations (if needed)     |
+
+## 📁 Files
+
+- `IITG_SA_assignment_2.ipynb`: Full Jupyter notebook with data processing, modeling, and evaluation.
+- `submission5.csv`: Final test set predictions for submission.
+
+
+Participated in Summer Analytics 2025 Hackathon - A great learning experience in handling real-world noisy satellite data!
